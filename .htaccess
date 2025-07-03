@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Set base if app is not in root
+RewriteBase /vimaportal/
+
+# Allow existing files and folders
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route all other requests to login or dashboard (optional fallback)
+# Example: default to login.php if direct route not found
+RewriteRule ^$ login.php [L]

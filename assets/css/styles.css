@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+    .navbar {
+        position: relative !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-top: 160px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        margin-top: 80px !important;
+    }
+}

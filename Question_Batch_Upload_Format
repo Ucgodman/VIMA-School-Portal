@@ -1,0 +1,16 @@
+Question Batch Upload Format:
+1. Each question must start with a number followed by a fullstop.: 1.
+2. Type: is optional but should be present and usually "objective" or "true_false"
+3. Marks: is optional; defaults to 1 if not specified.
+4. Options: each option must be in this format: A. etc.
+5. Answer: must indicate the correct option letter (e.g. Answer: C)
+
+example:
+1. What is a computer?
+Type: objective
+Marks: 2
+A. A person
+B. A machine
+C. An animal
+D. A plant
+Answer: B
