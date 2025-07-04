@@ -218,25 +218,9 @@ $clubs = $pdo->query("SELECT * FROM clubs ORDER BY club_name ASC")->fetchAll(PDO
                                         <input type="text" name="admission_date" value="<?= htmlspecialchars($student['admission_date']) ?>" class="form-control" readonly> 
                                     </div>
 
-                                    <div class="col-md-3 mb-3">
-                                        <label>Class of Study</label>
-                                       <input type="text" class="form-control" name="class_id" value="<?= $student['class_id'] ?>" readonly>
-                                   
-                                    </div>
+                                    
 
                                     <div class="col-md-3 mb-3">
-                                        <label>Section</label>
-                                        <input type="text" class="form-control" name="section_id" value="<?= $student['section_id'] ?>" readonly>
-                                    </div>
-
-                                    <div class="col-md-3 mb-3">
-                                        <label>Session</label>
-                                        <input type="text" class="form-control" name="session_id" value="<?= $student['session_id'] ?>" readonly>
-                                    </div>
-
-
-
-                                    <div class="col-md-4 mb-3">
                                         <label>Student House</label>
                                         <select class="form-control" name="house_id" required>
                                         <option value="">Select House</option>
@@ -248,7 +232,7 @@ $clubs = $pdo->query("SELECT * FROM clubs ORDER BY club_name ASC")->fetchAll(PDO
                                     </select>
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-3 mb-3">
                                         <label>Transportation</label>
                                         <select class="form-control" name="transport_id" required>
                                         <option value="">Select Transport Route</option>
@@ -261,7 +245,7 @@ $clubs = $pdo->query("SELECT * FROM clubs ORDER BY club_name ASC")->fetchAll(PDO
 
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-3 mb-3">
                                         <label>Dormitory</label>
                                         <select class="form-control" name="dormitory" >
                                             <option value="">Select Hostel</option>
