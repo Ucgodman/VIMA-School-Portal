@@ -1,6 +1,5 @@
 <?php
-session_start(); // Ensure session is started if not already
-
+session_start();
 require_once __DIR__ . "/config/database.php";
 include_once __DIR__ . "/functions/helper_functions.php";
 include_once __DIR__ . "/functions/permission.php";
@@ -21,31 +20,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($staff && password_verify($password, $staff['password'])) {
             $user = $staff;
             $user['id'] = $staff['id'];
-            $userType = ($staff['role_id'] == 1) ? 'admin' : 'staff';
+
+            // Map role_id to userType
+            switch ($staff['role_id']) {
+                case 1:  $userType = 'admin'; break;
+                case 2:  $userType = 'teacher'; break;
+                case 5:  $userType = 'clerk'; break;
+                case 6:  $userType = 'accountant'; break;
+                case 7:  $userType = 'principal'; break;
+                case 8:  $userType = 'vice_principal'; break;
+                case 9:  $userType = 'it_support'; break;
+                case 10: $userType = 'transport_manager'; break;
+                default: $userType = 'staff';
+            }
         }
 
-        // Check student if not found in staff
+        // Check student
         if (!$user) {
             $stmt = $pdo->prepare("SELECT student_id, email, password, firstname, lastname FROM students WHERE email = ? AND login_status = 1");
             $stmt->execute([$email]);
             $student = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
             if ($student && password_verify($password, $student['password'])) {
                 $user = $student;
                 $user['id'] = $student['student_id'];
                 $userType = 'student';
-                $user['role_id'] = 3;  // Student role ID from roles table
-                
+                $user['role_id'] = 3;
                 $_SESSION['student_id'] = $student['student_id'];
                 $_SESSION['student_name'] = $student['firstname'] . ' ' . $student['lastname'];
-
             }
-
-
         }
 
-        // Check parent if not found in student
+        // Check parent
         if (!$user) {
             $stmt = $pdo->prepare("SELECT parent_id, email, password, name FROM parents WHERE email = ? AND login_status = 1");
             $stmt->execute([$email]);
@@ -55,9 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $user = $parent;
                 $user['id'] = $parent['parent_id'];
                 $userType = 'parent';
-                $user['role_id'] = 4;  // Parent role ID from roles table
+                $user['role_id'] = 4;
 
-                // Split name into firstname and lastname for consistency
                 [$firstname, $lastname] = explode(' ', trim($parent['name'] . ' '), 2);
                 $user['firstname'] = $firstname;
                 $user['lastname'] = $lastname;
@@ -65,39 +70,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($user) {
-            // Fetch permissions
+            // ✅ Fetch role-based permissions
             $stmt = $pdo->prepare("SELECT menu_item FROM user_permissions WHERE role_id = ? AND user_type = ?");
-            $stmt->execute([$user['id'], $userType]);
+            $stmt->execute([$user['role_id'], $userType]);
             $permissions = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-            // Store user info in session
+            // Save user to session
             $_SESSION['user'] = [
                 'id' => $user['id'],
                 'type' => $userType,
                 'firstname' => $user['firstname'],
                 'lastname' => $user['lastname'],
                 'permissions' => $permissions,
-                'role_id' => $user['role_id'] ?? null, // only staff has this
+                'role_id' => $user['role_id'] ?? null,
                 'staff_id' => $user['staff_id'] ?? null
             ];
-
             $_SESSION['loggedIn'] = true;
 
             // Redirect
-            if ($userType === 'admin') {
-                header("Location: modules/index.php");
-            } else {
-                header("Location: modules/dashboard.php");
-            }
+            switch ($userType) {
+                    case 'admin':
+                        header("Location: modules/index.php");
+                        break;
+                    case 'student':
+                        header("Location: modules/dashboard.php");
+                        break;
+                    case 'parent':
+                        header("Location: modules/parent_dashboard.php");
+                        break;
+                    default:
+                        header("Location: modules/staff_dashboard.php");
+                }
             exit;
-        } else {
-            $error = "Invalid credentials.";
-        }
-    } else {
-        $error = "Email and password are required.";
-    }
-}
+                    } else {
+                        $error = "Invalid credentials.";
+                    }
+                } else {
+                    $error = "Email and password are required.";
+                }
+            }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

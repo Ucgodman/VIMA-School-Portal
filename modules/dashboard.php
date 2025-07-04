@@ -190,7 +190,7 @@ $notices = fetch_all("SELECT title, content, created_at FROM noticeboard ORDER B
 
 <!-- JS Includes (keep as in your template) -->
 <script src="../assets/js/core/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../assets/js/core/jquery-3.7.1.min.js"></script>
 
 
 </body>

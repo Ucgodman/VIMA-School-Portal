@@ -147,23 +147,9 @@ document.getElementById("getStudentsBtn").addEventListener("click", function () 
 
 </script>
     <!--   Core JS Files   -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/core/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/core/jquery-3.7.1.min.js"></script>
 
-    <!-- jQuery Scrollbar -->
-    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- jQuery Sparkline -->
-    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-
-    <!-- Bootstrap Notify -->
-    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-
-    <!-- Sweet Alert -->
-    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-
-    <!-- Kaiadmin JS -->
-    <script src="../assets/js/kaiadmin.min.js"></script>
 
 </body>
 </html>

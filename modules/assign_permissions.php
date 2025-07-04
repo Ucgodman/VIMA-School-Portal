@@ -64,7 +64,7 @@ $menuItems = $pdo->query("SELECT `key`, name FROM menu_items ORDER BY name ASC")
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="user_type" value="staff">
+                    <input type="hidden" name="user_type" id="staffUserType" value="">
                     <label>Select Role:</label>
                     <select class="form-select" name="role_id" id="staffRoleSelect" required>
                         <option value="">-- Choose Role --</option>
@@ -187,6 +187,25 @@ $(document).ready(function () {
         loadPermissions(4, 'parent-perm');
     });
 });
+
+const roleUserTypes = {
+    2: 'teacher',
+    5: 'clerk',
+    6: 'accountant',
+    7: 'principal',
+    8: 'vice_principal',
+    9: 'it_support',
+    10: 'transport_manager'
+};
+
+$('#staffRoleSelect').on('change', function () {
+    const roleId = $(this).val();
+    const userType = roleUserTypes[roleId];
+    $('#staffUserType').val(userType || '');
+
+    if (roleId) loadPermissions(roleId, 'staff-perm');
+});
+
 </script>
 
 </body>

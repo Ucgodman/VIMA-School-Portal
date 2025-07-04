@@ -21,7 +21,7 @@ if ($roleId == 1 || $userType === 'admin') {
 } else {
     // Get user permissions from DB
     $permStmt = $pdo->prepare("SELECT menu_item FROM user_permissions WHERE role_id = ? AND user_type = ?");
-    $permStmt->execute([$userId, $userType]);
+    $permStmt->execute([$roleId, $userType]);
     $allowedKeys = $permStmt->fetchAll(PDO::FETCH_COLUMN);
 }
 ?>
@@ -48,7 +48,7 @@ if ($roleId == 1 || $userType === 'admin') {
                 $dashboardLink = match ($userType) {
                     'student' => 'dashboard.php',
                     'parent'  => 'parent_d.php',
-                    default   => 'index.php', // for admin and staff
+                    default   => 'staff_dashboard.php', // for staff
                 };
                 ?>
                 <li class="nav-item active">

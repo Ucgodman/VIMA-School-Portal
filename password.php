@@ -2,8 +2,8 @@
 include 'config/database.php';
 include 'functions/helper_functions.php'; // Include helper functions
 
-$email = 'admin@school.com';  // The email of the user whose password you want to update
-$new_password = 'admin123';  // The new password you want to set
+$email = 'michael.brown@example.com';  // The email of the user whose password you want to update
+$new_password = 'techer123';  // The new password you want to set
 
 // Hash the new password
 $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
